@@ -21,6 +21,9 @@ app.set("views", path.join(process.cwd(), "views")); //default views folder
 app.set("view engine", ".hbs"); //default file extension used for looking up views
 app.engine("hbs", handlebars({"extname": ".hbs", "layoutsDir": "views/layouts", "defaultLayout": "main"})); //default engine used for .hbs files
 
+// init static directory
+app.use("/public", express.static(path.join(process.cwd(), "public")));
+
 app.get("/", function(req, res) {
     res.render("index");
 });
