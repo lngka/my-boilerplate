@@ -6,6 +6,7 @@ const path = require("path");
 const dotenv   = require("dotenv");
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
+const route = require("./app/routes/index.js");
 
 // init environment
 dotenv.load();
@@ -24,9 +25,8 @@ app.engine("hbs", handlebars({"extname": ".hbs", "layoutsDir": "views/layouts", 
 // init static directory
 app.use("/public", express.static(path.join(process.cwd(), "public")));
 
-app.get("/", function(req, res) {
-    res.render("index");
-});
+// routes configuration
+route(app);
 
 // start app
 var port = process.env.PORT;
