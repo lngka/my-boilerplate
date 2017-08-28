@@ -7,6 +7,7 @@ const dotenv   = require("dotenv");
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const route = require("./app/routes/index.js");
+const bodyParser = require("body-parser");
 
 // init environment
 dotenv.load();
@@ -24,6 +25,12 @@ app.engine("hbs", handlebars({"extname": ".hbs", "layoutsDir": "views/layouts", 
 
 // init static directory
 app.use("/public", express.static(path.join(process.cwd(), "public")));
+
+/** bodyParser.urlencoded(options)
+ * Parses the text as URL encoded data
+ * and exposes the resulting object (containing the keys and values) on req.body
+ */
+app.use(bodyParser.urlencoded({"extended": true}));
 
 // routes configuration
 route(app);
