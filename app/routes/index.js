@@ -1,15 +1,21 @@
 const User = require("../models/users.js");
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
     app.route("/")
-        .get(function(req, res){
-            res.render("login");
+        .get(checkAuthentication, function(req, res){
+            res.send("You logged in");
         });
 
     app.route("/login")
         .get(function(req, res){
             res.render("login");
-        });
+        })
+        .post(passport.authenticate("local", {
+            "successRedirect": "/",
+            "failureRedirect": "/login",
+            "failureFlash": true,
+            "successFlash": "Welcomme!!"
+        }));
 
     app.route("/register")
         .get(function(req, res) {
@@ -27,4 +33,11 @@ module.exports = function(app) {
                 }
             });
         });
+    function checkAuthentication(req, res, next){
+        if (req.isAuthenticated()) {
+            return next();
+        } else {
+            res.render("/login");
+        }
+    }
 };

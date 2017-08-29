@@ -8,6 +8,11 @@ const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const route = require("./app/routes/index.js");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const passport = require("passport");
+const configPassport = require("./app/config/passport.js");
+const flash = require("connect-flash");
 
 // init environment
 dotenv.load();
@@ -26,6 +31,24 @@ app.engine("hbs", handlebars({"extname": ".hbs", "layoutsDir": "views/layouts", 
 // init static directory
 app.use("/public", express.static(path.join(process.cwd(), "public")));
 
+// init cookieParser
+app.use(cookieParser("secretStr1ngT0encryptC00kl3s"));
+
+// init session
+app.use(session({
+    "resave": false,
+    "saveUninitialized": false,
+    "secret": "secretStr1ngT0encryptC00kl3s"
+}));
+
+// init req.flash(), used by passportjs
+app.use(flash());
+
+// init passport
+app.use(passport.initialize());
+app.use(passport.session());
+configPassport(passport);
+
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -33,7 +56,7 @@ app.use("/public", express.static(path.join(process.cwd(), "public")));
 app.use(bodyParser.urlencoded({"extended": true}));
 
 // routes configuration
-route(app);
+route(app, passport);
 
 // start app
 var port = process.env.PORT;

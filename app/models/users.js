@@ -21,8 +21,8 @@ const User = mongoose.model("User", mySchema);
 module.exports = User;
 
 /*
-* @param username {string}: the username which was typed in the login form
-* @enteredPassword {string}: the password which was typed in the login form
+* @param username {string}: the username which was typed in the register form
+* @enteredPassword {string}: the password which was typed in the register form
 * @callback {function}: called after check with the following parameters: err, newUser
 */
 module.exports.createNewUser = function (username, enteredPassword, email, callback) {
@@ -56,10 +56,14 @@ module.exports.createNewUser = function (username, enteredPassword, email, callb
 
 /*
 * @param user {object}: mongo doc representing the user
-* @enteredPassword {string}: the string which was typed in the login form
-* @callback {function}: called after check with the following parameters:
+* @param enteredPassword {string}: the string which was typed in the login form
+* @param callback {function}: called after check with the following parameters:
+* @callback-param err {object}: bcrypt runtime error
+* @callback-param isCorrect {boolean}: true if password match the hash in database, false otherwise
 */
-module.exports.checkValidPassword = function (user, enteredPassword, callback) {
-    console.log("checkValidPassword");
-    return callback(true);
+module.exports.checkValidLocalPassword = function (user, enteredPassword, callback) {
+    var hashedPassword = user.local.hashedPassword;
+    bcrypt.compare(enteredPassword, hashedPassword, function(err, isCorrect) {
+        return callback(err, isCorrect);
+    });
 };
