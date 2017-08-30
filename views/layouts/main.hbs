@@ -49,17 +49,20 @@
 
     <div class="container col-12">
         {{#if error }}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger fade show">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <strong>Error!</strong> {{error}}
             </div>
         {{/if}}
         {{#if success }}
-            <div class="alert alert-success">
+            <div class="alert alert-success fade show">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <strong>Success!</strong> {{success}}
             </div>
         {{/if}}
         {{#if message}}
-            <div class="alert alert-info">
+            <div class="alert alert-info fade show">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Info!</strong> {{message}}
             </div>
         {{/if}}

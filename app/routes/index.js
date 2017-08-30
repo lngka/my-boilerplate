@@ -34,6 +34,8 @@ module.exports = function(app, passport) {
             });
         });
     function checkAuthentication(req, res, next){
+        console.log("Called from checkAuthentication in index.js");
+        console.log(req.user);
         if (req.isAuthenticated()) {
             return next();
         } else {
