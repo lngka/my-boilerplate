@@ -17,6 +17,13 @@ module.exports = function(app, passport) {
             "successFlash": "Welcome!!"
         }));
 
+    app.route("/logout")
+        .get(checkAuthentication, function(req, res) {
+            req.logout();
+            req.flash("message", "Successfully logged out!");
+            res.redirect("login");
+        });
+
     app.route("/register")
         .get(function(req, res) {
             res.render("register");
