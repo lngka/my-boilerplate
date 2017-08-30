@@ -47,8 +47,24 @@
       </div>
     </nav>
 
-    <div class="container">
-    {{{body}}}
+    <div class="container col-12">
+        {{#if error }}
+            <div class="alert alert-danger">
+              <strong>Error!</strong> {{error}}
+            </div>
+        {{/if}}
+        {{#if success }}
+            <div class="alert alert-success">
+              <strong>Success!</strong> {{success}}
+            </div>
+        {{/if}}
+        {{#if message}}
+            <div class="alert alert-info">
+                <strong>Info!</strong> {{message}}
+            </div>
+        {{/if}}
+
+        {{{body}}}
     </div><!-- /.container -->
 
 

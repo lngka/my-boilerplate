@@ -7,7 +7,7 @@ module.exports = function(passport) {
             User.findOne({ "local.username": username }, function (err, user) {
                 if (err) { return done(err, null); }
                 if (!user) {
-                    return done(null, false, { "passportErrorMessage": "Incorrect username." });
+                    return done(null, false, { "message": "Incorrect username." }); // here passportjs calls flash("error", "Incorrect username.")
                 } else {
                     User.checkValidLocalPassword(user, password, function(err, isCorrect) {
                         if (err) {
@@ -15,7 +15,7 @@ module.exports = function(passport) {
                         } else if (isCorrect) {
                             return done(null, user);
                         } else {
-                            return done(null, false, { "passportErrorMessage": "Incorrect password." });
+                            return done(null, false, { "message": "Incorrect password." });
                         }
                     });
                 }

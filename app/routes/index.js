@@ -3,7 +3,7 @@ const User = require("../models/users.js");
 module.exports = function(app, passport) {
     app.route("/")
         .get(checkAuthentication, function(req, res){
-            res.send("You logged in");
+            res.render("index");
         });
 
     app.route("/login")
@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
             "successRedirect": "/",
             "failureRedirect": "/login",
             "failureFlash": true,
-            "successFlash": "Welcomme!!"
+            "successFlash": "Welcome!!"
         }));
 
     app.route("/register")
@@ -37,7 +37,7 @@ module.exports = function(app, passport) {
         if (req.isAuthenticated()) {
             return next();
         } else {
-            res.render("/login");
+            res.render("login");
         }
     }
 };

@@ -55,8 +55,18 @@ configPassport(passport);
  */
 app.use(bodyParser.urlencoded({"extended": true}));
 
+//init flash messages
+
+app.use(function(req, res, next) {
+    // the following error & success flash might be set by passportjs
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    // this flash is used to show user general messages
+    res.locals.message = req.flash("message");
+    next();
+});
 // routes configuration
-route(app, passport);
+route(app, passport, flash);
 
 // start app
 var port = process.env.PORT;
