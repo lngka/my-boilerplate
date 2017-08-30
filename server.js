@@ -55,8 +55,7 @@ configPassport(passport);
  */
 app.use(bodyParser.urlencoded({"extended": true}));
 
-//init flash messages
-
+// init flash messages
 app.use(function(req, res, next) {
     // the following error & success flash might be set by passportjs
     res.locals.error = req.flash("error");
@@ -65,6 +64,13 @@ app.use(function(req, res, next) {
     res.locals.message = req.flash("message");
     next();
 });
+
+// expose user object to the view engine
+app.use(function(req, res, next) {
+    res.locals.user = req.user || null;
+    next();
+});
+
 // routes configuration
 route(app, passport, flash);
 

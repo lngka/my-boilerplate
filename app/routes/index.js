@@ -3,7 +3,7 @@ const User = require("../models/users.js");
 module.exports = function(app, passport) {
     app.route("/")
         .get(checkAuthentication, function(req, res){
-            res.render("index");
+            res.render("home");
         });
 
     app.route("/login")
@@ -41,8 +41,6 @@ module.exports = function(app, passport) {
             });
         });
     function checkAuthentication(req, res, next){
-        console.log("Called from checkAuthentication in index.js");
-        console.log(req.user);
         if (req.isAuthenticated()) {
             return next();
         } else {
